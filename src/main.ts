@@ -45,14 +45,29 @@ function init() {
     `;
 }
 
+type GitGetTreeResponseTreeItem = {
+    mode: string;
+    path: string;
+    sha: string;
+    size?: number;
+    type: string;
+    url: string;
+};
+type GitGetTreeResponse = {
+    sha: string;
+    tree: Array<GitGetTreeResponseTreeItem>;
+    truncated: boolean;
+    url: string;
+};
+
 async function list() {
     const data = await fetch('https://api.github.com/repos/Sheraff/notebooks/git/trees/notes?recursive=1');
-    const json = await data.json();
+    const json = await data.json() as GitGetTreeResponse;
     const tree = json.tree;
     const html = tree
         .filter(({type}) => type === 'blob')
         .map(({path}) => `
-        <li><a href="https://sheraff.github.io/notebooks/?file=${path}">${path}</a></li>
+        <li><a href="/?file=${path}">${path}</a></li>
         `)
         .join('');
     document.body.innerHTML += html;
