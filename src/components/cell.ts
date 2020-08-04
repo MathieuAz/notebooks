@@ -150,7 +150,7 @@ export class CellElement extends LitElement {
                 <button @click="${() => this.emit({ type: "REMOVE_CELL" })}" class="cell-controls-button" title="Remove Cell">
                     ${DeleteIcon({ width: 18, height: 18 })}
                 </button>
-                <button @click="${() => this.emit({ type: "INSERT_CELL", position: "before" })}" class="cell-controls-button" title="Add Cell Here">
+                <button @click="${() => this.emit({ type: "INSERT_CELL", position: "before" })}" class="cell-controls-button cell-controls-button-add" title="Add Cell Here">
                     ${AssetsAddedIcon({ width: 20, height: 20 })}
                 </button>
             </div>

@@ -44,6 +44,10 @@ starboard-cell:focus-within .cell-container{
     grid-area: controls-above;
     display: flex;
     justify-content: flex-end;
+    opacity: 0;
+}
+.cell-container:hover .cell-controls-above {
+    opacity: 1;
 }
 
 .cell-controls-left-top {
@@ -125,6 +129,15 @@ starboard-cell:focus .cell-controls-button
 .cell-controls-button:focus {
     outline: none;
     border: 1px solid #eee;
+}
+.cell-controls-button-add:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: #00000030;
 }
 
 .cell-controls-left {
@@ -208,6 +221,11 @@ starboard-cell:focus .cell-controls-button
     background-color: #bbffb5;
 }
 
-.starboard-text-editor:hover .cell-select-editor-popover {
+.starboard-text-editor:focus {
+    outline: none;
+}
+
+.starboard-text-editor:focus .cell-select-editor-popover,
+.starboard-text-editor:focus-within .cell-select-editor-popover {
     display: flex;
 }
