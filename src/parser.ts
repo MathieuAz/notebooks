@@ -33,9 +33,6 @@ export function parseNotebookContent(notebookContentString: string) {
     for (const line of cellLines) {
 
       if (line.slice(0, 3) === "```") {
-        if(cells.length && cells[cells.length - 1].lines.length === 0)
-          cells.pop();
-
         const flags = line.split(/[ \t]+/).filter(s => s !== "" && s.match(/^`*$/) === null);
         const [type, ...properties] = flags;
         currentCell = {
@@ -51,13 +48,13 @@ export function parseNotebookContent(notebookContentString: string) {
         frontMatter += line + "\n";
       }
       else {
-        if(!line.match(/^(\s)*$/))
+        if(currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
           currentCell.lines.push(line);
       }
     }
 
     return {
       frontMatter,
-      cells
+      cells: cells.filter(cell => cell.lines.length)
     };
   }
