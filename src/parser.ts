@@ -19,7 +19,7 @@ export function parseNotebookContent(notebookContentString: string) {
     let frontMatter = "";
     // All lines before the first cell make up the front matter.
     for (const [i, line] of allLines.entries()) {
-        if (line.slice(0, 2) === "%%") {
+        if (line.slice(0, 3) === "```") {
           frontMatter = allLines.slice(0, i).join("\n");
           cellLines = allLines.slice(i);
           break;
@@ -32,31 +32,27 @@ export function parseNotebookContent(notebookContentString: string) {
 
     for (const line of cellLines) {
 
-      if (line.slice(0, 2) === "%%") {
-        const flags = line.split(/[ \t]+/).filter(s => s !== "" && s.match(/^%*$/) === null);
-        if (flags.length === 0) { // Invalid cell as it only has the "%%" bit
-          // To be robust against this error we will simply add this as text to the current cell or frontmatter
-          // but we can only do that if at least one cell was parsed so far, otherwise we add it to the frontmatter.
+      if (line.slice(0, 3) === "```") {
+        if(cells.length && cells[cells.length - 1].lines.length === 0)
+          cells.pop();
 
-          // No code here, it will continue with the code after the if so there is no need to repeat that
-
-        } else { // A new cell is started
-          const [type, ...properties] = flags;
-          currentCell = {
-            type,
-            properties,
-            lines: []
-          };
-          cells.push(currentCell);
-          continue;
-        }
+        const flags = line.split(/[ \t]+/).filter(s => s !== "" && s.match(/^`*$/) === null);
+        const [type, ...properties] = flags;
+        currentCell = {
+          type: type || 'md',
+          properties,
+          lines: []
+        };
+        cells.push(currentCell);
+        continue;
       }
 
       if (currentCell === undefined) { // This really only happens in case of an invalid notebook cell header
         frontMatter += line + "\n";
       }
       else {
-        currentCell.lines.push(line);
+        if(!line.match(/^(\s)*$/))
+          currentCell.lines.push(line);
       }
     }
 

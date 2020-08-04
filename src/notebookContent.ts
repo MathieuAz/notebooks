@@ -56,7 +56,7 @@ export function notebookContentToText(nb: NotebookContent) {
 }
 
 export function cellToText(cell: Cell) {
-    const cellText = `%% ${cell.cellType}\n${cell.textContent}`;
+    const cellText = `\`\`\` ${cell.cellType}\n${cell.textContent}`;
     return cellText;
 }
 
