@@ -13,8 +13,6 @@ import { hookMarkdownIt } from "../highlight";
 import { render } from "lit-html";
 import { unsafeHTML } from "lit-html/directives/unsafe-html";
 import { DeviceDesktopIcon, DevicePhoneIcon } from "@spectrum-web-components/icons-workflow";
-// Note: somewhat problematic for garbage collection if no editor is ever chosen..
-let notifyOnEditorChosen = [];
 let codeMirrorModule;
 let monacoModule;
 // Global state shared between all editors
@@ -42,6 +40,9 @@ let StarboardTextEditor = class StarboardTextEditor extends LitElement {
         if (currentEditor === "") {
             this.switchToMonacoEditor();
         }
+        else {
+            this.initEditor();
+        }
     }
     firstUpdated(changedProperties) {
         super.firstUpdated(changedProperties);
@@ -62,7 +63,6 @@ let StarboardTextEditor = class StarboardTextEditor extends LitElement {
                 </div>
             ${unsafeHTML(mdText)}
             `, this.editorMountpoint);
-            notifyOnEditorChosen.push(() => this.initEditor());
         }
     }
     initEditor() {
@@ -80,9 +80,7 @@ let StarboardTextEditor = class StarboardTextEditor extends LitElement {
         currentEditor = "codemirror";
         if (!codeMirrorModule) {
             codeMirrorModule = import(/* webpackChunkName: codemirror-editor */ "../editor/codeMirror");
-            document.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading CodeMirror editor..</b>");
-            notifyOnEditorChosen.forEach((c) => c());
-            notifyOnEditorChosen = [];
+            this.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading CodeMirror editor..</b>");
         }
         codeMirrorModule.then((m) => {
             this.editorMountpoint.innerHTML = "";
@@ -96,9 +94,7 @@ let StarboardTextEditor = class StarboardTextEditor extends LitElement {
         currentEditor = "monaco";
         if (!monacoModule) {
             monacoModule = import(/* webpackChunkName: monaco-editor */ "../editor/monaco");
-            document.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading Monaco editor..</b>");
-            notifyOnEditorChosen.forEach((c) => c());
-            notifyOnEditorChosen = [];
+            this.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading Monaco editor..</b>");
         }
         monacoModule.then((m) => {
             this.editorMountpoint.innerHTML = "";
@@ -110,7 +106,7 @@ let StarboardTextEditor = class StarboardTextEditor extends LitElement {
     }
     render() {
         return html `
-        <div class="starboard-text-editor"></div>
+        <div class="starboard-text-editor" tabIndex="0"></div>
         `;
     }
     focus() {
