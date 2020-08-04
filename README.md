@@ -6,5 +6,5 @@
 
 ## Structure of this repo:
 - code on [`master` branch](https://github.com/Sheraff/notebooks/tree/master)
-- build of code on [`dist` branch](https://github.com/Sheraff/notebooks/tree/dist), served through github-pages
+- build of code on [`dist` branch](https://github.com/Sheraff/notebooks/tree/dist), auto-deployed w/ CI and served w/ github-pages
 - library of .md notes on [`notes` branch](https://github.com/Sheraff/notebooks/tree/notes)
