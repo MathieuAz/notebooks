@@ -105,8 +105,3 @@ html`
 ```
 
 That's it! I hope that both the advice and Starboard are useful for you.
-
-### Next steps
-
-* Check out the other example notebooks, scroll back up!
-* Or, [**Sign up**](https://starboard.gg/signup) to create notebooks that can be instantly shared, or create an [offline-only notebook](https://starboard.gg/dashboard/new).
