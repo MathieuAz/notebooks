@@ -3,29 +3,31 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import { textToNotebookContent, notebookContentToText } from "../src/notebookContent";
 const simpleNotebookPlaintext = `
-Text before the first cell
-%% md
+\`\`\`
 # Notebook
 Hello there!
 
-%% js
-const x = 5;
+\`\`\`
 
-%% unknown-cell-type
+\`\`\` js
+const x = 5;
+\`\`\`
+
+\`\`\` unknown-cell-type
 `;
 const notebookWithCellProperties = `
-%% js autoRun
+\`\`\` js autoRun
 const a = 123;
 `;
 const withInvalidCell = `
-%% js autoRun
+\`\`\` js autoRun
 const a = 123;
 // Cell below is missing a type, so it should not start a new cell.
-%%
+
 const x = 3;
 `;
 const withInvalidFirstCell = `
-%%
+
 // There are actually zero cells now..
 `;
 describe("Text to notebook content", () => {
