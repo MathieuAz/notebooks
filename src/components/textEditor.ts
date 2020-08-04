@@ -15,9 +15,6 @@ import { DeviceDesktopIcon, DevicePhoneIcon } from "@spectrum-web-components/ico
 export type SupportedLanguage = "javascript" | "typescript" | "markdown" | "css" | "html" | "python";
 export type WordWrapSetting = "off" | "on" | "wordWrapColumn" | "bounded";
 
-// Note: somewhat problematic for garbage collection if no editor is ever chosen..
-let notifyOnEditorChosen: (() => any)[] = [];
-
 let codeMirrorModule: Promise<{createCodeMirrorEditor: any}> | undefined;
 let monacoModule: Promise<{createMonacoEditor: any}> | undefined;
 
@@ -58,6 +55,8 @@ export class StarboardTextEditor extends LitElement {
     handleDblClick() {
         if (currentEditor === "") {
             this.switchToMonacoEditor();
+        } else {
+            this.initEditor();
         }
     }
 
@@ -80,7 +79,6 @@ export class StarboardTextEditor extends LitElement {
                 </div>
             ${unsafeHTML(mdText)}
             `, this.editorMountpoint);
-            notifyOnEditorChosen.push(() => this.initEditor());
         }
     }
 
@@ -100,9 +98,7 @@ export class StarboardTextEditor extends LitElement {
         currentEditor = "codemirror";
         if (!codeMirrorModule) {
             codeMirrorModule = import(/* webpackChunkName: codemirror-editor */  "../editor/codeMirror" as any);
-            document.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading CodeMirror editor..</b>");
-            notifyOnEditorChosen.forEach((c) => c());
-            notifyOnEditorChosen = [];
+            this.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading CodeMirror editor..</b>");
         }
     
         codeMirrorModule.then((m) => {
@@ -119,9 +115,7 @@ export class StarboardTextEditor extends LitElement {
         currentEditor = "monaco";
         if (!monacoModule) {
             monacoModule = import(/* webpackChunkName: monaco-editor */  "../editor/monaco" as any);
-            document.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading Monaco editor..</b>");
-            notifyOnEditorChosen.forEach((c) => c());
-            notifyOnEditorChosen = [];
+            this.querySelectorAll(".cell-select-editor-popover").forEach((e) => e.innerHTML = "<b>Loading Monaco editor..</b>");
         }
 
         monacoModule.then((m) => {
@@ -136,7 +130,7 @@ export class StarboardTextEditor extends LitElement {
 
     render() {
         return html`
-        <div class="starboard-text-editor"></div>
+        <div class="starboard-text-editor" tabIndex="0"></div>
         `;
     }
 
