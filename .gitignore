@@ -17,7 +17,6 @@
 
 # build
 /_site/
-/dist/
 
 # Webpack build stats
 *stats.json
