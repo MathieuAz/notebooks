@@ -67,7 +67,7 @@ async function list() {
     const html = tree
         .filter(({type}) => type === 'blob')
         .map(({path}) => `
-        <li><a href="/?file=${path}">${path}</a></li>
+        <li><a href="?file=${path}">${path}</a></li>
         `)
         .join('');
     document.body.innerHTML += html;
