@@ -57,6 +57,7 @@ async function list() {
     const tree = json.tree;
     const html = tree
         .filter(({type}) => type === 'blob')
+        .filter(({path}) => !path.startsWith('.'))
         .map(({path}) => `
         <li><a href="?file=${path}">${path}</a></li>
         `)
