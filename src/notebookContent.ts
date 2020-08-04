@@ -52,7 +52,15 @@ export function notebookContentToText(nb: NotebookContent) {
         text += `\`\`\` frontmatter \n ${nb.frontMatter} \n\`\`\`\n`;
     }
 
-    return text + nb.cells.map(cellToText).join("\n");
+    nb.cells.forEach((cell, i) => {
+        if(i !== 0 && cell.cellType !== 'md' && nb.cells[i-1].cellType !== 'md')
+            text += '\n';
+        text += cellToText(cell);
+        if(i !== nb.cells.length - 1)
+            text += '\n';
+    });
+
+    return text;
 }
 
 export function cellToText(cell: Cell) {

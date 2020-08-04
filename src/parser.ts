@@ -40,7 +40,7 @@ export function parseNotebookContent(notebookContentString: string) {
 
             continue;
         } else {
-            // if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
+            if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
                 currentCell.lines.push(line);
         }
     }
