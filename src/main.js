@@ -49,6 +49,11 @@ async function list() {
         <li><a href="?file=${path}">${path}</a></li>
         `)
         .join('');
-    document.body.innerHTML += html;
+    document.body.innerHTML += `
+    <h1>List of available notebooks</h1>
+    <ul>
+        ${html}
+    </ul>
+    `;
 }
 //# sourceMappingURL=main.js.map
