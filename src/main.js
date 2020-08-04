@@ -16,21 +16,12 @@ if (query.get('file')) {
     fetch(notebookFromFile)
         .then(data => data.text())
         .then(text => {
-        if (startsWithCodeBlock(text)) {
-            window.initialNotebookContent = text;
-        }
-        else {
-            window.initialNotebookContent = `\`\`\` md\n${text}`;
-        }
+        window.initialNotebookContent = text;
     })
         .finally(init);
 }
 else {
     list();
-}
-function startsWithCodeBlock(text) {
-    const regex = /^(\s)*```/;
-    return text.match(regex);
 }
 function init() {
     document.body.innerHTML += `

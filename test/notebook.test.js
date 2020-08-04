@@ -2,32 +2,23 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import { textToNotebookContent, notebookContentToText } from "../src/notebookContent";
-const simpleNotebookPlaintext = `
-\`\`\`
-# Notebook
+const simpleNotebookPlaintext = `# Notebook
 Hello there!
-
-\`\`\`
 
 \`\`\` js
 const x = 5;
 \`\`\`
-
 \`\`\` unknown-cell-type
-`;
-const notebookWithCellProperties = `
-\`\`\` js autoRun
-const a = 123;
-`;
-const withInvalidCell = `
-\`\`\` js autoRun
+with unknown content?
+\`\`\``;
+const notebookWithCellProperties = `\`\`\` js autoRun
+const a = 123;`;
+const withInvalidCell = `\`\`\` js autoRun
 const a = 123;
 // Cell below is missing a type, so it should not start a new cell.
 
-const x = 3;
-`;
+const x = 3;`;
 const withInvalidFirstCell = `
-
 // There are actually zero cells now..
 `;
 describe("Text to notebook content", () => {
@@ -59,12 +50,6 @@ describe("Text to notebook content", () => {
     it("handles wrong cell header", () => {
         const notebookContent = textToNotebookContent(withInvalidCell);
         expect(notebookContent.cells).toHaveLength(1);
-    });
-    it("handles wrong cell header for first cell", () => {
-        const notebookContent = textToNotebookContent(withInvalidFirstCell);
-        expect(notebookContent.cells).toHaveLength(0);
-        expect(notebookContent.frontMatter === withInvalidFirstCell); // All text should be front matter
-        expect(notebookContentToText(notebookContent) === withInvalidFirstCell);
     });
 });
 //# sourceMappingURL=notebook.test.js.map

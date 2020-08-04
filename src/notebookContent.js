@@ -22,13 +22,17 @@ export function textToNotebookContent(text) {
 export function notebookContentToText(nb) {
     let text = "";
     if (nb.frontMatter.length > 0) {
-        text += nb.frontMatter + "\n";
+        text += `\`\`\` frontmatter \n ${nb.frontMatter} \n\`\`\`\n`;
     }
     return text + nb.cells.map(cellToText).join("\n");
 }
 export function cellToText(cell) {
-    const cellText = `\`\`\` ${cell.cellType}\n${cell.textContent}`;
-    return cellText;
+    if (cell.cellType === 'md') {
+        return cell.textContent;
+    }
+    else {
+        return `\`\`\` ${cell.cellType}\n${cell.textContent}\n\`\`\``;
+    }
 }
 function requireIndexOfCellId(cells, id) {
     if (id === undefined) {

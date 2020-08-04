@@ -3,20 +3,16 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import { split } from "eol";
 export function parseNotebookContent(notebookContentString) {
-    const allLines = split(notebookContentString);
-    // All lines after the frontmatter
-    let cellLines = [];
-    let frontMatter = "";
-    // All lines before the first cell make up the front matter.
-    for (const [i, line] of allLines.entries()) {
-        if (line.slice(0, 3) === "```") {
-            frontMatter = allLines.slice(0, i).join("\n");
-            cellLines = allLines.slice(i);
-            break;
-        }
-    }
+    const cellLines = split(notebookContentString);
     const cells = [];
     let currentCell = undefined;
+    // default to MD
+    currentCell = {
+        type: 'md',
+        properties: [],
+        lines: [],
+    };
+    cells.push(currentCell);
     for (const line of cellLines) {
         if (line.slice(0, 3) === "```") {
             const flags = line.split(/[ \t]+/).filter(s => s !== "" && s.match(/^`*$/) === null);
@@ -29,17 +25,19 @@ export function parseNotebookContent(notebookContentString) {
             cells.push(currentCell);
             continue;
         }
-        if (currentCell === undefined) { // This really only happens in case of an invalid notebook cell header
-            frontMatter += line + "\n";
-        }
         else {
-            if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
-                currentCell.lines.push(line);
+            // if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
+            currentCell.lines.push(line);
         }
     }
     return {
-        frontMatter,
-        cells: cells.filter(cell => cell.lines.length)
+        frontMatter: cells
+            .filter(cell => cell.type === 'frontmatter')
+            .map(cell => cell.lines.join('\n'))
+            .join('\n'),
+        cells: cells
+            .filter(cell => cell.type !== 'frontmatter')
+            .filter(cell => cell.lines.length)
     };
 }
 //# sourceMappingURL=parser.js.map

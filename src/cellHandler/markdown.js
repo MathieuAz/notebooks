@@ -18,7 +18,7 @@ export const MARKDOWN_CELL_TYPE_DEFINITION = {
 export class MarkdownCellHandler extends CellHandler {
     constructor(cell) {
         super(cell);
-        this.isInEditMode = true;
+        this.isInEditMode = false;
     }
     getControls() {
         let editOrRunButton;
@@ -41,12 +41,7 @@ export class MarkdownCellHandler extends CellHandler {
     attach(params) {
         this.elements = params.elements;
         this.emit = params.emit;
-        if (this.cell.textContent !== "") {
-            this.run();
-        }
-        else { // When creating an empty cell, it makes more sense to start in editor mode
-            this.enterEditMode();
-        }
+        this.run();
     }
     setupEditor() {
         const topElement = this.elements.topElement;
