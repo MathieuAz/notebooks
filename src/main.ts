@@ -21,20 +21,11 @@ if(query.get('file')) {
     fetch(notebookFromFile)
         .then(data => data.text())
         .then(text => {
-            if(startsWithCodeBlock(text)) {
-                (window as any).initialNotebookContent = text;
-            } else {
-                (window as any).initialNotebookContent = `\`\`\` md\n${text}`;
-            }
+            (window as any).initialNotebookContent = text;
         })
         .finally(init);
 } else {
     list();
-}
-
-function startsWithCodeBlock(text: string) {
-    const regex = /^(\s)*```/;
-    return text.match(regex);
 }
 
 function init() {

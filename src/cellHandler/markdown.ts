@@ -23,7 +23,7 @@ export const MARKDOWN_CELL_TYPE_DEFINITION = {
 };
 
 export class MarkdownCellHandler extends CellHandler {
-    private isInEditMode = true;
+    private isInEditMode = false;
 
     private elements!: CellElements;
     private emit!: (event: CellEvent) => void;
@@ -55,12 +55,7 @@ export class MarkdownCellHandler extends CellHandler {
     attach(params: CellHandlerAttachParameters) {
         this.elements = params.elements;
         this.emit = params.emit;
-
-        if (this.cell.textContent !== "") {
-            this.run();
-        } else { // When creating an empty cell, it makes more sense to start in editor mode
-            this.enterEditMode();
-        }
+        this.run();
     }
 
     private setupEditor() {
