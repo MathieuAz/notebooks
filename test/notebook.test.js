@@ -19,9 +19,6 @@ const a = 123;
 // Cell below is missing a type, so it should not start a new cell.
 
 const x = 3;`;
-const withInvalidFirstCell = `
-// There are actually zero cells now..
-`;
 describe("Text to notebook content", () => {
     it("can parse a simple notebook", async () => {
         const notebookContent = textToNotebookContent(simpleNotebookPlaintext);
