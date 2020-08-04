@@ -26,8 +26,8 @@ export function parseNotebookContent(notebookContentString) {
             continue;
         }
         else {
-            // if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
-            currentCell.lines.push(line);
+            if (currentCell.type !== 'md' || currentCell.lines.length || !line.match(/^(\s)*$/))
+                currentCell.lines.push(line);
         }
     }
     return {

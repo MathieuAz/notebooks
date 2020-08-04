@@ -8,6 +8,7 @@ Hello there!
 \`\`\` js
 const x = 5;
 \`\`\`
+
 \`\`\` unknown-cell-type
 with unknown content?
 \`\`\``;
