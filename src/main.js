@@ -9,10 +9,11 @@ import * as lithtml from "lit-html";
 window.html = lithtml.html;
 window.svg = lithtml.svg;
 window.lithtml = lithtml;
+console.log(GITHUB_REPOSITORY);
 const query = new URLSearchParams(window.location.search);
 if (query.get('file')) {
     const fileName = query.get('file');
-    const notebookFromFile = `https://raw.githubusercontent.com/Sheraff/notebooks/notes/${fileName}`;
+    const notebookFromFile = `https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/notes/${fileName}`;
     fetch(notebookFromFile)
         .then(data => data.text())
         .then(text => {
@@ -31,7 +32,7 @@ function init() {
     `;
 }
 async function list() {
-    const data = await fetch('https://api.github.com/repos/Sheraff/notebooks/git/trees/notes?recursive=1');
+    const data = await fetch(`https://api.github.com/repos/${GITHUB_REPOSITORY}/git/trees/notes?recursive=1`);
     const json = await data.json();
     const tree = json.tree;
     const html = tree
