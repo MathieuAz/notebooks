@@ -110,9 +110,20 @@ module.exports = (env, argv) => {
         config.output.publicPath = "/"
     }
 
+    let defaultVariables;
+    if(!argv.repo) {
+        try {
+            defaultVariables = require("./local.json");
+        } catch (e) {
+            throw new Error(`To work outside of github actions, define the github repository to use
+            - either with a command line argument \`webpack --repo={owner}/{repository}\`
+            - or as "repo": "{owner}/{repository}" inside a /local.json file`);
+        }
+    }
+
     config.plugins.push(
         new webpack.DefinePlugin({
-            GITHUB_REPOSITORY: JSON.stringify(argv.repo || 'Sheraff/notebooks'),
+            GITHUB_REPOSITORY: JSON.stringify(argv.repo || defaultVariables.repo),
         })
     )
 
