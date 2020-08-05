@@ -6,6 +6,7 @@ It's probably the quickest way to visualize some data with interactivity, do som
 * Mix Markdown, HTML, CSS and Javascript.
 * The file format is a plaintext file, which plays nice with version control systems like git.
 * Runs entirely in your browser, everything is static: no server, no setup and no build step.
+* You can use ⌘+S (macOS) or ctrl+S (windows) to save a plain text markdown file
 
 Let's see it in action!
 
