@@ -29,7 +29,7 @@ jobs:
     - name: Build distribution
       env:
         REPO: ${{ github.repository }}
-      run: npm run build:autodeploy -- --$REPO && npm run build:autodeploy:post
+      run: npm run build:autodeploy -- --repo=$REPO && npm run build:autodeploy:post
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@3.5.9
