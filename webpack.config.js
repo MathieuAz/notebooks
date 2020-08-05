@@ -109,6 +109,13 @@ module.exports = (env, argv) => {
         config.devtool = 'inline-source-map'
         config.output.publicPath = "/"
     }
+
+    config.plugins.push(
+        new webpack.DefinePlugin({
+            GITHUB_REPOSITORY: JSON.stringify(argv.repo || 'Sheraff/notebooks/yolo'),
+        })
+    )
+
     return config;
 };
 
