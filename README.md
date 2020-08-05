@@ -8,3 +8,8 @@
 - code on [`master` branch](https://github.com/Sheraff/notebooks/tree/master)
 - build of code on [`dist` branch](https://github.com/Sheraff/notebooks/tree/dist), auto-deployed w/ CI and served w/ github-pages
 - library of .md notes on [`notes` branch](https://github.com/Sheraff/notebooks/tree/notes)
+
+## To use this for yourself
+- clone this repo
+- make sure you have the three branches `master`, `dist` and `notes`
+- the rest should work automatically
