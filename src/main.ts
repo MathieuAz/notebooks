@@ -14,8 +14,6 @@ import * as lithtml from "lit-html";
 (window as any).lithtml = lithtml;
 
 declare const GITHUB_REPOSITORY: string;
-console.log(GITHUB_REPOSITORY);
-
 
 const query = new URLSearchParams(window.location.search);
 if(query.get('file')) {

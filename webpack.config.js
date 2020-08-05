@@ -112,7 +112,7 @@ module.exports = (env, argv) => {
 
     config.plugins.push(
         new webpack.DefinePlugin({
-            GITHUB_REPOSITORY: JSON.stringify(argv.repo || 'Sheraff/notebooks/yolo'),
+            GITHUB_REPOSITORY: JSON.stringify(argv.repo || 'Sheraff/notebooks'),
         })
     )
 
