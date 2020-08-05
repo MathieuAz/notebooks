@@ -9,7 +9,6 @@ import * as lithtml from "lit-html";
 window.html = lithtml.html;
 window.svg = lithtml.svg;
 window.lithtml = lithtml;
-console.log(GITHUB_REPOSITORY);
 const query = new URLSearchParams(window.location.search);
 if (query.get('file')) {
     const fileName = query.get('file');
