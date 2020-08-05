@@ -16,6 +16,7 @@ import { AssetsAddedIcon } from '@spectrum-web-components/icons-workflow';
 import { debounce } from '@github/mini-throttle/decorators';
 import { starboardLogo } from './logo';
 import { insertHTMLChildAtIndex } from '../util';
+import { saveAs } from 'file-saver';
 let StarboardNotebook = class StarboardNotebook extends LitElement {
     constructor() {
         super(...arguments);
@@ -63,7 +64,13 @@ let StarboardNotebook = class StarboardNotebook extends LitElement {
         }
         else {
             console.error("Can't save as parent frame is not listening for messages");
+            this.downloadFile();
         }
+    }
+    downloadFile() {
+        const text = notebookContentToText(this.notebookContent);
+        const blob = new Blob([text], { type: "text/markdown; charset=UTF-8" });
+        saveAs(blob, 'test.md');
     }
     connectedCallback() {
         super.connectedCallback();

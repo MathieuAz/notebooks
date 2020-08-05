@@ -20,6 +20,7 @@ export declare class StarboardNotebook extends LitElement {
     changeCellType(id: string, newCellType: string): void;
     runCell(id: string, focusNext: boolean, insertNewCell: boolean): void;
     save(): void;
+    downloadFile(): void;
     connectedCallback(): void;
     firstUpdated(changedProperties: any): void;
     performUpdate(): void;
