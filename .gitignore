@@ -21,3 +21,6 @@
 
 # Webpack build stats
 *stats.json
+
+# local environment
+local.json
